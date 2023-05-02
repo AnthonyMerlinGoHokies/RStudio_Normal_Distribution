@@ -1,0 +1,174 @@
+---
+output: pdf_document
+geometry: margin=2cm
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\begin{center}\LARGE{\textbf{ICE \#5: Normal Distribution}}\end{center}
+
+
+**Instructions:** Complete all problems to the best of your abilities! **To receive a complete grade for this assignment, you must:**
+
+1. write out the probability statement (i.e., $P(X = \#)$, $P(X < \#)$, etc.) where you define our random variable. 
+2. write the parameter value (i.e., $\mu$ and $\sigma$ or $\sigma^2$)
+3. label the normal density and shaded in the specified region 
+4. the answer for problem (using R)
+
+*Reminder: In-Class Exercises are graded as Complete or Incomplete. To receive a complete grade, you MUST ANSWER EVERY QUESTION to the best of your ability. For instance, if you do not answer ONE QUESTION, you will receive an incomplete on this assignment. The purpose of this grading scale is to ensure you are attempting every problem and working to learn the material.*
+
+# Problem \#1: 
+Given a random variable X having a normal distribution with $\mu=50$ and $\sigma = 10$. Find the probability that X is between 45 and 62. Label the normal density with the correct x-axis and shaded in the specified region.  
+
+$$X \sim N\left(\mu = 50 , \sigma = 10\right)$$
+```{r, fig.align='center', ffig.width=6.5, fig.height= 3.5,  echo = FALSE}
+# CODE TO HELP PLOT THE NORMAL DENSITY 
+mu = 50; sigma = 10 # parameters:
+
+# x-range (4 std away from the mean )
+lower_x_value = mu - 4*sigma 
+upper_x_value = mu + 4*sigma
+
+# create vector from lower_x_value to upper_x_value with step size 1
+x <- seq(lower_x_value,upper_x_value, 1)
+# Calculating the normal density with the specified parameters.
+normal_den <- dnorm(x, mean = mu, sd = sigma)
+
+# Plotting the density
+plot(x, normal_den, type = 'l', lwd = 2, ylab = 'Density', xlab = 'X',xaxt ='n')
+axis(1, at = mu + c(-3*sigma, -2*sigma, -1*sigma,0, sigma, 2*sigma, 3*sigma), 
+     labels = mu + c(-3*sigma, -2*sigma, -1*sigma,0, sigma, 2*sigma, 3*sigma))
+abline(v = mu, col = 'blue', lwd = 2, lty = 2 )
+
+#Shading 
+
+x_poly <- c(45,x[x >= 45 & x <= 62],62)
+y_poly <- c(0, normal_den[x >= 45 & x <= 62],0)
+polygon(x_poly,y_poly, col = rgb(1,0,0,0.4), border = NA)
+```
+
+```{r}
+pnorm(62,mean = 50, sd =10) - pnorm(45, mean = 50, sd = 10)
+```
+
+$$ P(45< X< 62)$$ 
+$~$ \newpage 
+
+# Problem \#2: 
+Given a random variable X having a normal distribution with $\mu=300$ and $\sigma^2 = 2500$. Find the probability that X is greater than 362. Label the normal density with the correct x-axis and shaded in the specified region.  
+
+$$X \sim N(\mu = 300 , \sigma = \sqrt2500  )$$
+```{r, fig.align='center', fig.width=6.5, fig.height= 3.5, echo = FALSE}
+# CODE TO HELP PLOT THE NORMAL DENSITY 
+mu = 300; sigma = 50 # parameters:
+
+# x-range (4 std away from the mean )
+lower_x_value = mu - 4*sigma 
+upper_x_value = mu + 4*sigma
+
+# create vector from lower_x_value to upper_x_value with step size 1
+x <- seq(lower_x_value,upper_x_value, 1)
+# Calculating the normal density with the specified parameters.
+normal_den <- dnorm(x, mean = mu, sd = sigma)
+
+# Plotting the density
+plot(x, normal_den, type = 'l', lwd = 2, ylab = 'Density', xlab = 'X',xaxt ='n')
+axis(1, at = mu + c(-3*sigma, -2*sigma, -1*sigma,0, sigma, 2*sigma, 3*sigma), 
+     labels = mu + c(-3*sigma, -2*sigma, -1*sigma,0, sigma, 2*sigma, 3*sigma))
+abline(v = mu, col = 'blue', lwd = 2, lty = 2 )
+
+#Shading 
+x_poly <- c(362,x[x >= 362],tail(x, 1))
+y_poly <- c(0, normal_den[x >= 362],0)
+polygon(x_poly,y_poly, col = rgb(1,0,0,0.4), border = NA)
+```
+$$P(X>362) $$
+
+```{r}
+1 - pnorm(362,mean = 300,sd = 50)
+```
+
+
+$~$ \newpage 
+
+# Problem \#3: 
+Given a normal distribution with $\mu = 40$ and $\sigma = 6$, find the value of $x$ that has 45\% of the area to the LEFT. Draw the normal curve and shaded in the specified region.
+
+
+
+$$X \sim N(\mu = 40 , \sigma =  6)$$
+
+```{r, fig.align='center', fig.width=6.5, fig.height= 3.5, echo = FALSE}
+# CODE TO HELP PLOT THE NORMAL DENSITY 
+mu = 40; sigma = 6 # parameters:
+
+# x-range (4 std away from the mean )
+lower_x_value = mu - 4*sigma 
+upper_x_value = mu + 4*sigma
+
+# create vector from lower_x_value to upper_x_value with step size 1
+x <- seq(lower_x_value,upper_x_value, )
+# Calculating the normal density with the specified parameters.
+normal_den <- dnorm(x, mean = mu, sd = sigma)
+
+# Plotting the density
+plot(x, normal_den, type = 'l', lwd = 2, ylab = 'Density', xlab = 'X',xaxt = 'n')
+axis(1, at = mu + c(-3*sigma, -2*sigma, -1*sigma,0, sigma, 2*sigma, 3*sigma), 
+     labels = mu + c(-3*sigma, -2*sigma, -1*sigma,0, sigma, 2*sigma, 3*sigma))
+abline(v = mu, col = 'blue', lwd = 2, lty = 2 )
+
+#shading 
+x_poly <- c(x[1],x[x<=39.24],39.24)
+y_poly <- c(0, normal_den[x<=39.24],0)
+polygon(x_poly,y_poly, col = rgb(1,0,0,0.4), border = NA)
+
+```
+
+$$ P(X<???) = .45 $$
+```{r}
+ qnorm(.45, mean =  40, sd = 6)
+```
+
+
+
+$~$ \newpage 
+
+# Problem \#4: 
+Given a normal distribution with $\mu = 40$ and $\sigma = 6$, find the value of $x$ that has 14\% of the area to the RIGHT. Draw the normal curve and shaded in the specified region.
+
+
+$$X \sim N(\mu = 40, \sigma = 6)$$
+
+```{r, fig.align='center', fig.width=6.5, fig.height= 3.5, echo = FALSE}
+# CODE TO HELP PLOT THE NORMAL DENSITY 
+mu = 40; sigma = 6 # parameters:
+
+# x-range (4 std away from the mean )
+lower_x_value = mu - 4*sigma 
+upper_x_value = mu + 4*sigma
+
+# create vector from lower_x_value to upper_x_value with step size 1
+x <- seq(lower_x_value,upper_x_value, )
+# Calculating the normal density with the specified parameters.
+normal_den <- dnorm(x, mean = mu, sd = sigma)
+
+# Plotting the density
+plot(x, normal_den, type = 'l', lwd = 2, ylab = 'Density', xlab = 'X',xaxt = 'n')
+axis(1, at = mu + c(-3*sigma, -2*sigma, -1*sigma,0, sigma, 2*sigma, 3*sigma), 
+     labels =mu + c(-3*sigma, -2*sigma, -1*sigma,0, sigma, 2*sigma, 3*sigma))
+abline(v = mu, col = 'blue', lwd = 2, lty = 2 )
+
+#Shading 
+x_poly <- c(46.48,x[x >= 46.48],tail(x, 1))
+y_poly <- c(0, normal_den[x >= 46.48],0)
+polygon(x_poly,y_poly, col = rgb(1,0,0,0.4), border = NA)
+
+```
+
+$$P(X>???) = .14 $$
+
+```{r}
+qnorm (1 - .14, mean =  40,sd = 6)
+```
